@@ -2,13 +2,14 @@
 
 namespace app\engine;
 
-class Autoload {
-  public function loadClass($className)
-  {
-    $fileName = $_SERVER['DOCUMENT_ROOT'] . "/" . str_replace(['app', '\\'], ['..', '/'], $className) . ".php";
+class Autoload
+{
+    public function loadClass($className)
+    {
+        $fileName = str_replace(['app\\', '\\'], [ROOT . DS, DS], $className) . ".php";
 
-    if(file_exists($fileName)) {
-      include $fileName;
+        if(file_exists($fileName)) {
+            include $fileName;
+        }
     }
-  }
 }
