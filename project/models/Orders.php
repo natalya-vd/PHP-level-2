@@ -2,14 +2,22 @@
 
 namespace app\models;
 
-class Orders extends Model
+class Orders extends DBModel
 {
-    public $id;
-    public $session_id;
-    public $phone;
-    public $name_user;
-    public $users_id;
-    public $status;
+    protected $id;
+    protected $session_id;
+    protected $phone;
+    protected $name_user;
+    protected $users_id;
+    protected $status;
+
+    protected $props = [
+        'session_id' => false,
+        'phone' => false,
+        'name_user' => false,
+        'users_id' => false,
+        'status' => false,
+    ];
 
     public function __construct($session_id = null, $phone = null, $name_user = null, $users_id = null, $status = null)
     {
@@ -20,7 +28,7 @@ class Orders extends Model
         $this->status = $status;
     }
 
-    public function getTableName()
+    public static function getTableName()
     {
         return 'orders';
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 03 2022 г., 00:48
+-- Время создания: Мар 07 2022 г., 17:01
 -- Версия сервера: 8.0.24
 -- Версия PHP: 7.4.27
 
@@ -175,7 +175,11 @@ INSERT INTO `products` (`id`, `name_product`, `price`, `path`, `description`) VA
 (6, 'Пицца', 125, 'sushi.jpg', 'Описание'),
 (7, 'Пицца', 125, 'sushi.jpg', 'Описание'),
 (8, 'Пицца', 125, 'sushi.jpg', 'Описание'),
-(9, 'Пицца', 125, 'sushi.jpg', 'Описание');
+(9, 'Пицца', 125, 'sushi.jpg', 'Описание'),
+(10, 'Пицца', 186, 'sushi.jpg', 'Описание'),
+(12, 'Суши', 186, 'sushi.jpg', 'Описание'),
+(13, 'Суши', 145, 'sushi.jpg', 'Описание'),
+(14, 'Суши', 186, 'sushi.jpg', 'Test2');
 
 -- --------------------------------------------------------
 
@@ -272,7 +276,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
