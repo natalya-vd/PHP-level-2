@@ -2,12 +2,18 @@
 
 namespace app\models;
 
-class Gallery extends Model
+class Gallery extends DBModel
 {
-    public $id;
-    public $name;
-    public $size;
-    public $quantity_views;
+    protected $id;
+    protected $name;
+    protected $size;
+    protected $quantity_views;
+
+    protected $props = [
+        'name' => false,
+        'size' => false,
+        'quantity_views' => false,
+    ];
 
     public function __construct($name = null, $size = null, $quantity_views = null)
     {
@@ -16,7 +22,7 @@ class Gallery extends Model
         $this->quantity_views = $quantity_views;
     }
 
-    public function getTableName()
+    public static function getTableName()
     {
         return 'gallery';
     }

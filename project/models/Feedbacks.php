@@ -2,12 +2,18 @@
 
 namespace app\models;
 
-class Feedbacks extends Model
+class Feedbacks extends DBModel
 {
-    public $id;
-    public $name;
-    public $feedback;
-    public $product_id;
+    protected $id;
+    protected $name;
+    protected $feedback;
+    protected $product_id;
+
+    protected $props = [
+        'name'=> false,
+        'feedback'=> false,
+        'product_id'=> false,
+    ];
 
     public function __construct($name = null, $feedback = null, $product_id = null)
     {
@@ -16,7 +22,7 @@ class Feedbacks extends Model
         $this->product_id = $product_id;
     }
 
-    public function getTableName()
+    public static function getTableName()
     {
         return 'feedbacks';
     }

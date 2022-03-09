@@ -1,66 +1,24 @@
 <?php
 
 namespace app\models;
-use app\engine\Db;
 use app\interfaces\IModel;
 
-abstract class Model implements IModel
+abstract class Model implements IModel 
 {
-    abstract public function getTableName();
+    protected $props = [];
 
-    public function getOne($id)
+    public function __set($name, $value)
     {
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE id = :id";
-        return Db::getInstance()->queryOne($sql, ['id' => $id]);
-    }
-
-    public function getAll()
-    {
-        $sql = "SELECT * FROM {$this->getTableName()}";
-        return Db::getInstance()->queryAll($sql);
-    }
-
-    public function insert()
-    {
-        $keys = [];
-        $params = [];
-        foreach($this as $key=>$value) {
-            if($key !== 'id') {
-                $keys[] = $key;
-                $params[$key] = $value;
-            };
+        if(!is_null($this->props[$name])) {
+            $this->$name = $value;
+            $this->props[$name] = true;
         }
-
-        $strKeys = implode(', ', $keys);
-        $strValues = ":" . implode(', :', $keys);
-
-        $sql = "INSERT INTO {$this->getTableName()} ({$strKeys}) VALUES ({$strValues})";
-
-        Db::getInstance()->execute($sql, $params);
-        $this->id = DB::getInstance()->lastInsertId();
-
-        return $this;
     }
 
-    public function update()
+    public function __get($name)
     {
-        $keys = [];
-        $params = [];
-        foreach($this as $key=>$value) {
-            if($key !== 'id') $keys[] = $key . "=" . ":{$key}";
-            $params[$key] = $value;
+        if(!is_null($this->props[$name])) {
+            return $this->$name;
         }
-
-        $strKeys = implode(', ', $keys);
-
-        $sql = "UPDATE {$this->getTableName()} SET {$strKeys} WHERE id = :id";
-        return Db::getInstance()->execute($sql, $params);
-    }
-
-    public function delete() 
-    {
-        $id = $this->id;
-        $sql = "DELETE FROM {$this->getTableName()} WHERE id = :id";
-        return Db::getInstance()->execute($sql, ['id' => $id]);
     }
 }
