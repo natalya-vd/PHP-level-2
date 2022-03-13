@@ -11,6 +11,7 @@ abstract class DBModel extends Model {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
         return Db::getInstance()->queryOneObject($sql, ['id' => $id], static::class);
+        // return Db::getInstance()->queryOne($sql, ['id' => $id], static::class);
     }
 
     public static function getAll()
@@ -59,13 +60,16 @@ abstract class DBModel extends Model {
             if($value)  {
                 $keys[] = $key . "=" . ":{$key}";
                 $params[':' . $key] = $this->$key;
+                $this->props[$key] = false;
             }
         }
 
         $strKeys = implode(', ', $keys);
 
         $sql = "UPDATE {$tableName} SET {$strKeys} WHERE id = :id";
-        return Db::getInstance()->execute($sql, $params);
+        Db::getInstance()->execute($sql, $params);
+
+        return $this;
     }
 
     public function delete() 

@@ -5,6 +5,11 @@ use app\models\Basket;
 
 class BasketController extends Controller
 {
+    public function actionIndex()
+    {
+        echo $this->render('index');
+    }
+    
     public function actionBasket()
     {
         $basket = Basket::getBasket();

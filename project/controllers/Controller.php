@@ -1,15 +1,17 @@
 <?php
 
 namespace app\controllers;
+use app\interfaces\IRenderer;
 
-class Controller
+abstract class Controller
 {
     private $action;
     private $defaultAction = 'index';
+    private $render;
 
-    public function actionIndex()
+    public function __construct(IRenderer $render)
     {
-        echo $this->render('index');
+        $this->render = $render;
     }
 
     public function runAction($action)
@@ -37,10 +39,6 @@ class Controller
 
     public function renderTemplate($template, $params = [])
     {
-        ob_start();
-        extract($params);
-
-        include ROOT . VIEWS_DIR . $template . '.php';
-        return ob_get_clean();
+        return $this->render->renderTemplate($template, $params);
     }
 }

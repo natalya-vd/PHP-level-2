@@ -9,7 +9,7 @@ class Db
         'driver' => 'mysql',
         'host' => 'localhost',
         'login' => 'user',
-        'password' => 12345,
+        'password' => '12345',
         'database' => 'shop',
         'charset' => 'utf8'
     ];
