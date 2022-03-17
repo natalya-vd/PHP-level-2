@@ -259,6 +259,10 @@ textarea:focus {
     margin: 0 0 30px;
 }
 
+.error-message {
+    color: red;
+}
+
 /*Отзывы*/
 .feedback-list {
     display: flex;

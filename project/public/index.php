@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+// $session_id = session_id();
+
 use app\engine\Autoload;
 // use app\engine\Render;
 use app\engine\TwigRender;

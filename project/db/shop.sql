@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 07 2022 г., 17:01
+-- Время создания: Мар 17 2022 г., 23:08
 -- Версия сервера: 8.0.24
 -- Версия PHP: 7.4.27
 
@@ -200,8 +200,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `pass`, `hash`, `role`) VALUES
-(1, 'admin', '$2y$10$wMZdLAFb4Ox4Mm6l6DctjOr.sl6lU.PHmnVUPnHJRGtkoCzLMTgpi', '894413057620bbb37beb857.80570769', 'admin'),
-(2, 'user', '$2y$10$CqL9GXNgC24m5B3wjhOD4.tzs8FOFNygMg4jMWPQffgyPkZFTs3zW', '', 'guest');
+(1, 'admin', '$2y$10$m1Exrzvp.vZ6xGWr/xktNOqVfKdacvK2pzd6UlADlPqe925MenHmO', '112321911762339189e67f86.88314185', 'admin'),
+(2, 'user', '$2y$10$jsqGiEoGnb.yBHcxJjmjMuvnf8XLmZwd9Xfyx8oDqsjyB.HH23Yvm', '1793416483623391c24f1820.40774930', 'guest'),
+(3, 'dad', '$2y$10$Mls11Sc2fT9gE5pDC3CMaelb6xvKuYECcdBLkSYlg2Z4UirP3EB0e', '78135313462336bf6052bf6.49747550', 'guest'),
+(4, 'lily', '$2y$10$dpMjXcyBzxeqY/95iF6NruP6UqFtX6tOW5EVG0AXc.u0LGjX5g/xy', '101522995262336c53831246.19897498', 'guest'),
+(5, 'mom', '$2y$10$8HQ3Bu06TAfht2ly.H0CPepmloonDfuLvj.cPVCsfcNqp9rkSsWOS', '9620607962336cb3d7e588.19612408', 'guest'),
+(6, 'pol', '$2y$10$brHq/rtBwUL3e2BuTuw2.uVCENIstvvLjG3FW59S1Ptt4PthveYZO', '156728706762336d87183974.95055162', 'guest');
 
 --
 -- Индексы сохранённых таблиц
@@ -282,7 +286,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
