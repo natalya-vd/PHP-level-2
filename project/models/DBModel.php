@@ -29,11 +29,25 @@ abstract class DBModel extends Model {
         return Db::getInstance()->queryLimit($sql, $limit);
     }
 
+    public static function getCountWhere($field, $name, $value) {
+        $tableName = static::getTableName();
+        $sql = "SELECT count({$field}) as count FROM $tableName WHERE {$name} = :value";
+
+        return Db::getInstance()->queryOne($sql, ['value' => $value])['count'];
+    }
+
     public static function getWhere($name, $value) {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM $tableName WHERE {$name} = :value";
 
         return Db::getInstance()->queryOneObject($sql, ['value' => $value], static::class);
+    }
+
+    public static function getWhereAll($name, $value) {
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM $tableName WHERE {$name} = :value";
+
+        return Db::getInstance()->queryAll($sql, ['value' => $value]);
     }
 
     public function insert()

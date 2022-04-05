@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 17 2022 г., 23:08
+-- Время создания: Апр 05 2022 г., 23:07
 -- Версия сервера: 8.0.24
 -- Версия PHP: 7.4.27
 
@@ -60,7 +60,30 @@ INSERT INTO `basket` (`id`, `product_id`, `price`, `quantity`, `session_id`, `us
 (108, 3, 180, 1, 'ec3f5afj7iegiapl4kk4v84cnn0o8b6a', 0),
 (109, 2, 150, 1, 'ec3f5afj7iegiapl4kk4v84cnn0o8b6a', 0),
 (110, 4, 160, 1, 'ec3f5afj7iegiapl4kk4v84cnn0o8b6a', 0),
-(111, 3, 180, 1, 'pe2ieb6tbee0vj2sd9t1g01ni96srval', 2);
+(111, 3, 180, 1, 'pe2ieb6tbee0vj2sd9t1g01ni96srval', 2),
+(112, 2, 150, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(113, 2, 150, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(114, 2, 150, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(115, 2, 150, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(116, 2, 150, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(117, 2, 150, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(118, 3, 180, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(119, 3, 180, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(120, 2, 150, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(121, 3, 180, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(122, 3, 180, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(123, 1, 200, 1, 'smdnofobot7trhfjqu36n4sij2lnukoi', 0),
+(129, 2, 150, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 0),
+(135, 2, 150, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 0),
+(136, 2, 150, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 0),
+(141, 2, 150, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 0),
+(142, 2, 150, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 2),
+(143, 3, 180, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 2),
+(144, 3, 180, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
+(145, 3, 180, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
+(146, 3, 180, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 2),
+(147, 2, 150, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 2),
+(148, 3, 180, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0);
 
 -- --------------------------------------------------------
 
@@ -200,12 +223,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `pass`, `hash`, `role`) VALUES
-(1, 'admin', '$2y$10$m1Exrzvp.vZ6xGWr/xktNOqVfKdacvK2pzd6UlADlPqe925MenHmO', '112321911762339189e67f86.88314185', 'admin'),
+(1, 'admin', '$2y$10$m1Exrzvp.vZ6xGWr/xktNOqVfKdacvK2pzd6UlADlPqe925MenHmO', '1897504735624a0fc5409725.55486272', 'admin'),
 (2, 'user', '$2y$10$jsqGiEoGnb.yBHcxJjmjMuvnf8XLmZwd9Xfyx8oDqsjyB.HH23Yvm', '1793416483623391c24f1820.40774930', 'guest'),
 (3, 'dad', '$2y$10$Mls11Sc2fT9gE5pDC3CMaelb6xvKuYECcdBLkSYlg2Z4UirP3EB0e', '78135313462336bf6052bf6.49747550', 'guest'),
 (4, 'lily', '$2y$10$dpMjXcyBzxeqY/95iF6NruP6UqFtX6tOW5EVG0AXc.u0LGjX5g/xy', '101522995262336c53831246.19897498', 'guest'),
 (5, 'mom', '$2y$10$8HQ3Bu06TAfht2ly.H0CPepmloonDfuLvj.cPVCsfcNqp9rkSsWOS', '9620607962336cb3d7e588.19612408', 'guest'),
-(6, 'pol', '$2y$10$brHq/rtBwUL3e2BuTuw2.uVCENIstvvLjG3FW59S1Ptt4PthveYZO', '156728706762336d87183974.95055162', 'guest');
+(6, 'pol', '$2y$10$brHq/rtBwUL3e2BuTuw2.uVCENIstvvLjG3FW59S1Ptt4PthveYZO', '156728706762336d87183974.95055162', 'guest'),
+(7, 'dad2', '$2y$10$jaWt7XuTslkHTQRxz0cxWumqLWZzzL9heHOz7S8I2cxEkJhon0Mg.', '6236717936249f6a740b650.02604950', 'guest'),
+(8, 'lily2', '$2y$10$r2JQHSzInvQlU5rs0aZyfefSmY3yINeZ3WjSYxDn5.vDZRuy1WUkS', '69131957624ca0a293e028.75705218', 'guest');
 
 --
 -- Индексы сохранённых таблиц
@@ -256,7 +281,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT для таблицы `feedbacks`
@@ -286,7 +311,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

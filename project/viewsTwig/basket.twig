@@ -4,7 +4,7 @@
     {% if basket is not empty %}
     <ul class="cart__list">
       {% for good in basket %}
-      <li class="card-product" data-item="{{good.id}}">
+      <li class="card-product" data-item="{{good.basket_id}}">
         <div class="card-product__title-wrapper">
           <img class="card-product__img" src="/img/catalog/{{good.path}}" alt="{{good.name_product}}" width="70" height="70">
           <h3 class="card-product__heading">
@@ -20,7 +20,7 @@
         <p>
           {{good.price * good.quantity}}
         </p>
-        <button class="button-delete" type="button" data-basket="{{good.id}}">
+        <button class="button-delete" type="button" data-basket="{{good.basket_id}}">
           <img src="/img/delete.svg" alt="delete">
         </button>
       </li>

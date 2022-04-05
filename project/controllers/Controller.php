@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 use app\interfaces\IRenderer;
+use app\models\Basket;
 use app\models\Users;
 
 abstract class Controller
@@ -29,7 +30,6 @@ abstract class Controller
 
     public function render($template, $params = [])
     {
-        // Вынесла сюда т.к. хочу на всех страницах знать, что пользователь авторизован, а не только на странице авторизации
         if(Users::isAuth()) {
             $params['allow'] = true;
             $params['login'] = Users::getName();
@@ -42,7 +42,9 @@ abstract class Controller
 
         return $this->renderTemplate('layouts/layout', [
             'header' => $this->renderTemplate('modules/header', [
-                'menu' => $this->renderTemplate('modules/menu', $params)
+                'menu' => $this->renderTemplate('modules/menu', [
+                    'count' => Basket::getCountWhere('id', 'session_id', session_id())
+                ])
             ]),
             'content' => $this->renderTemplate($template, $params),
             'footer' => $this-> renderTemplate('modules/footer', ['date' => date ('Y')])

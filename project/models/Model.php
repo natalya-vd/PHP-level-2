@@ -17,14 +17,18 @@ abstract class Model implements IModel
 
     public function __get($name)
     {
-        if(!is_null($this->props[$name])) {
+        if(!is_null($this->$name)) {
             return $this->$name;
+        } else {
+            die('Нет такого поля');
         }
     }
 
     public function __isset($name) {
-        if(!is_null($this->props[$name])) {
+        if(!is_null($this->$name)) {
             return $this->$name;
+        } else {
+            die('Нет такого поля');
         }
     }
 }

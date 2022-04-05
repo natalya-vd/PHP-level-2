@@ -1,9 +1,9 @@
 <?php
 
 session_start();
-// $session_id = session_id();
 
 use app\engine\Autoload;
+use app\engine\Request;
 // use app\engine\Render;
 use app\engine\TwigRender;
 
@@ -14,9 +14,10 @@ include '../vendor/autoload.php';
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
+$request = new Request();
 
-$controllerName = $_GET['c'] ?: 'product';
-$actionName = $_GET['a'];
+$controllerName = $request->getControllerName() ?: 'product';
+$actionName = $request->getActionName();
 
 $controllerClass = CONTROLLER . ucfirst($controllerName) . 'Controller';
 
