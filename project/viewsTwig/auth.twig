@@ -1,0 +1,41 @@
+<main class="container">
+  <div class="login">
+    {% if allow %}
+    <div>
+      Добро пожаловать {{ login }}
+    </div>
+    <a href="/?c=auth&a=logout">Выйти</a>
+    {% else %}
+    <div>
+      <p>
+        Для регистрации придумайте логин и пароль
+      </p>
+      <p class="error-message">{{ messageReg }}</p>
+      <form action="/?c=auth&a=registration" name="registration" method="post">
+        <div class="login-inner">
+          <input type="text" placeholder="Введите имя" name="login_reg">
+          <input type="password" placeholder="Введите пароль" name="pass_reg">
+        </div>
+        <button class="button" type="submit">Регистрация</button>
+      </form>
+    </div>
+    <div>
+      <p>
+        Если Вы уже зарегистрированы, введите логин и пароль
+      </p>
+      <p class="error-message">{{ messageError }}</p>
+      <form action="/?c=auth&a=login" name="authentication" method="post">
+        <div class="login-inner">
+          <input type="text" placeholder="Введите имя" name="login">
+          <input type="password" placeholder="Введите пароль" name="pass">
+          <label>
+            <input type="checkbox" name="save">
+            <span>Сохранить?</span>
+          </label>
+        </div>
+        <button class="button" type="submit">Войти</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</main>

@@ -29,6 +29,13 @@ abstract class DBModel extends Model {
         return Db::getInstance()->queryLimit($sql, $limit);
     }
 
+    public static function getWhere($name, $value) {
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM $tableName WHERE {$name} = :value";
+
+        return Db::getInstance()->queryOneObject($sql, ['value' => $value], static::class);
+    }
+
     public function insert()
     {
         $tableName = static::getTableName();
@@ -59,13 +66,16 @@ abstract class DBModel extends Model {
             if($value)  {
                 $keys[] = $key . "=" . ":{$key}";
                 $params[':' . $key] = $this->$key;
+                $this->props[$key] = false;
             }
         }
 
         $strKeys = implode(', ', $keys);
 
         $sql = "UPDATE {$tableName} SET {$strKeys} WHERE id = :id";
-        return Db::getInstance()->execute($sql, $params);
+        Db::getInstance()->execute($sql, $params);
+
+        return $this;
     }
 
     public function delete() 

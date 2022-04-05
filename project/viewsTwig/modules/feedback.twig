@@ -1,0 +1,20 @@
+<ul>
+  {% if feedbackList|length == 0 %}
+    <li>Нет отзывов</li>
+  {% else %}
+  {% for value in feedbackList %}
+    <li class="feedback-list">
+      {% if feedbackControl is not empty %}
+      <div class="feedback-control">
+        <a href="/one-product/edit/?id_feedback=<?=$value['id']?>&id=<?=$value['id_product']?>"><img src="/img/edit.png" alt="edit" width="20"></a>
+        <a href="/one-product/delete/?id_feedback=<?=$value['id']?>&id=<?=$value['id_product']?>"><img src="/img/delete.svg" alt="delete"></a>
+      </div>
+      {% endif %}
+      <div class="feedback-text">
+        <p>{{value['name']}}</p>
+        <p>{{value['feedback']}}</p>
+      </div>
+    </li>
+  {% endfor %}
+  {% endif %}
+</ul>

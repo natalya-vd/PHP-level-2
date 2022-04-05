@@ -6,6 +6,11 @@ use app\models\Products;
 
 class ProductController extends Controller
 {
+    public function actionIndex()
+    {
+        echo $this->render('index');
+    }
+    
     public function actionCatalog()
     {
         $page = $_GET['page'] ?? 0;

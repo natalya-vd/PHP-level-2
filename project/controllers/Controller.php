@@ -1,15 +1,18 @@
 <?php
 
 namespace app\controllers;
+use app\interfaces\IRenderer;
+use app\models\Users;
 
-class Controller
+abstract class Controller
 {
     private $action;
     private $defaultAction = 'index';
+    private $render;
 
-    public function actionIndex()
+    public function __construct(IRenderer $render)
     {
-        echo $this->render('index');
+        $this->render = $render;
     }
 
     public function runAction($action)
@@ -26,21 +29,28 @@ class Controller
 
     public function render($template, $params = [])
     {
+        // Вынесла сюда т.к. хочу на всех страницах знать, что пользователь авторизован, а не только на странице авторизации
+        if(Users::isAuth()) {
+            $params['allow'] = true;
+            $params['login'] = Users::getName();
+        }
+        
+        // Потом добавлю сюда логику для определения админа
+        // if(checkRole($_SESSION['login'])) {    
+        // $params['isAdmin'] = true;
+        // }
+
         return $this->renderTemplate('layouts/layout', [
             'header' => $this->renderTemplate('modules/header', [
                 'menu' => $this->renderTemplate('modules/menu', $params)
             ]),
             'content' => $this->renderTemplate($template, $params),
-            'footer' => $this-> renderTemplate('modules/footer', ['date' => date ('Y')]),
+            'footer' => $this-> renderTemplate('modules/footer', ['date' => date ('Y')])
         ]);
     }
 
     public function renderTemplate($template, $params = [])
     {
-        ob_start();
-        extract($params);
-
-        include ROOT . VIEWS_DIR . $template . '.php';
-        return ob_get_clean();
+        return $this->render->renderTemplate($template, $params);
     }
 }
