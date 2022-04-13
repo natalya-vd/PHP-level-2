@@ -1,32 +1,25 @@
 <?php
 
-namespace app\models;
+namespace app\models\repositories;
 
+use app\models\Repository;
+use app\models\entities\Users;
 use app\engine\Session;
 
-class Users extends DBModel
+class UsersRepository extends Repository
 {
-    protected $id;
-    protected $login;
-    protected $pass;
-    protected $hash;
-    protected $role;
-
-    protected $props = [
-        'login' => false,
-        'pass' => false,
-        'hash' => false,
-    ];
-
-    public function __construct($login = null, $pass = null, $hash = null)
+    protected function getTableName()
     {
-        $this->login = $login;
-        $this->pass = $pass;
-        $this->hash = $hash;
+        return 'users';
     }
 
-    public static function auth($login, $pass) {
-        $resultDb = static::getWhere('login', $login);
+    protected function getEntityClass()
+    {
+        return Users::class;
+    }
+
+    public function auth($login, $pass) {
+        $resultDb = $this->getWhere('login', $login);
         $session = new Session();
 
         if (password_verify($pass, $resultDb->pass)) {
@@ -37,13 +30,13 @@ class Users extends DBModel
         return false;
     }
 
-    public static function isAuth() {
+    public function isAuth() {
         $session = new Session();
 
         if(isset($_COOKIE["hash"]) && !isset($session->getSession()['login'])){
             $hash = $_COOKIE["hash"];
 
-            $result = static::getWhere('hash', $hash);
+            $result = $this->getWhere('hash', $hash);
             $user = $result->login;
             
             if (!empty($user)) {
@@ -55,12 +48,7 @@ class Users extends DBModel
         return isset($session->getSession()['login']);
     }
 
-    public static function getName() {
+    public function getName() {
         return (new Session)->getSession()['login'];
-    }
-
-    public static function getTableName()
-    {
-        return 'users';
     }
 }

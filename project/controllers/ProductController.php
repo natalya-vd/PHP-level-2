@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use app\engine\Request;
-use app\models\Products;
-use app\models\Feedbacks;
+use app\models\repositories\ProductsRepository;
+use app\models\repositories\FeedbacksRepository;
 
 class ProductController extends Controller
 {
@@ -17,25 +17,25 @@ class ProductController extends Controller
     {
         $page = (new Request())->getParams()['page'] ?? 0;
 
-        $catalog = Products::getLimit(($page + 1) * 4);
+        $catalog = (new ProductsRepository())->getLimit(($page + 1) * 4);
 
         echo $this->render('product/catalog', [
             'title' => 'Каталог',
             'catalog' => $catalog,
             'page' => ++$page,
-            'feedbackList' => Feedbacks::getAll(),
+            'feedbackList' => (new FeedbacksRepository())->getAll(),
         ]);
     }
 
     public function actionCard()
     {
         $id = (new Request())->getParams()['id'];
-        $product = Products::getOne($id);
+        $product = (new ProductsRepository())->getOne($id);
 
         echo $this->render('product/card', [
             'title' => 'Страница товара',
             'product' => $product,
-            'feedbackList' => Feedbacks::getWhereAll('product_id', $id)
+            'feedbackList' => (new FeedbacksRepository())->getWhereAll('product_id', $id)
         ]);
     }
 }

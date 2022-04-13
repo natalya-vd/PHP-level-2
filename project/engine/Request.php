@@ -27,6 +27,13 @@ class Request
         $this->actionName = $url[2];
 
         $this->params = $_REQUEST;
+
+        $request = json_decode(file_get_contents('php://input'));
+        if(!is_null($request)) {
+            foreach($request as $key => $value) {
+                $this->params[$key] = $value;
+            }
+        }
     }
 
     public function getControllerName()

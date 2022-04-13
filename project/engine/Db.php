@@ -54,7 +54,11 @@ class Db
     {
         $STH = $this->query($sql, $params);
         $STH->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
-        return $STH->fetch();
+        $obj = $STH->fetch();
+        if(!$obj) {
+            throw new \Exception('Продукт не найден', 404);
+        }
+        return $obj;
     }
 
     private function prepareDsnString() {

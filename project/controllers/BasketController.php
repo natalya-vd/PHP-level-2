@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\engine\Request;
 use app\engine\Session;
-use app\models\Basket;
+use app\models\entities\Basket;
+use app\models\repositories\BasketRepository;
 
 class BasketController extends Controller
 {
@@ -14,32 +16,32 @@ class BasketController extends Controller
     
     public function actionBasket()
     {
-        $session_id = session_id();
+        $session_id = (new Session())->getSessionId();
 
-        $basket = Basket::getBasket($session_id);
+        $basket = (new BasketRepository())->getBasket($session_id);
 
         echo $this->render('basket', [
             'title' => 'Корзина',
             'basket' => $basket,
-            'sumBasket' => Basket::getSum($session_id)
+            'sumBasket' => (new BasketRepository())->getSum($session_id)
         ]);
     }
 
     public function actionAdd()
     {
-        $request = json_decode(file_get_contents('php://input'));
+        $id = (new Request())->getParams()['id'];
+        $price = (new Request())->getParams()['price'];
 
-        // header("Content-type: application/json");
-
-        $session_id = session_id();
+        $session_id = (new Session())->getSessionId();
         $session = (new Session())->getSession();
         $users_id = empty($session) ? 0 : $session['id'];
 
-        (new Basket($request->id, $request->price, $session_id, '1', $users_id))->save();
+        $basket = new Basket($id, $price, $session_id, '1', $users_id);
+        (new BasketRepository())->save($basket);
 
         $response = [
             'status' => 'ok',
-            'count' => Basket::getCountWhere('id', 'session_id', $session_id),
+            'count' => (new BasketRepository())->getCountWhere('id', 'session_id', $session_id),
         ];
 
         echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
@@ -48,19 +50,23 @@ class BasketController extends Controller
 
     public function actionDelete()
     {
-        $request = json_decode(file_get_contents('php://input'));
+        $id = (new Request())->getParams()['id'];
 
-        // header("Content-type: application/json");
+        $session_id = (new Session())->getSessionId();
 
-        $session_id = session_id();
+        $basket = (new BasketRepository())->getOne($id);
 
-        $product = Basket::getOne($request->id);
-        $product->delete();
+        $error = 'ok';
+        if($session_id == $basket->session_id) {
+            (new BasketRepository())->delete($basket);
+        } else {
+            $error = 'error';
+        }
 
         $response = [
-            'status' => 'ok',
-            'count' => Basket::getCountWhere('id', 'session_id', $session_id),
-            'sumBasket' => Basket::getSum($session_id)
+            'status' => $error,
+            'count' => (new BasketRepository())->getCountWhere('id', 'session_id', $session_id),
+            'sumBasket' => (new BasketRepository())->getSum($session_id)
         ];
 
         echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

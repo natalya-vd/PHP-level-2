@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 use app\interfaces\IRenderer;
-use app\models\Basket;
-use app\models\Users;
+use app\models\repositories\UsersRepository;
+use app\models\repositories\BasketRepository;
 
 abstract class Controller
 {
@@ -24,15 +24,15 @@ abstract class Controller
         if(method_exists($this, $method)) {
             $this->$method();
         } else {
-            echo '404 нет такого экшена';
+            throw new \Exception('Нет такого экшена', 404);
         }
     }
 
     public function render($template, $params = [])
     {
-        if(Users::isAuth()) {
+        if((new UsersRepository())->isAuth()) {
             $params['allow'] = true;
-            $params['login'] = Users::getName();
+            $params['login'] = (new UsersRepository())->getName();
         }
         
         // Потом добавлю сюда логику для определения админа
@@ -43,7 +43,7 @@ abstract class Controller
         return $this->renderTemplate('layouts/layout', [
             'header' => $this->renderTemplate('modules/header', [
                 'menu' => $this->renderTemplate('modules/menu', [
-                    'count' => Basket::getCountWhere('id', 'session_id', session_id())
+                    'count' => (new BasketRepository())->getCountWhere('id', 'session_id', session_id())
                 ])
             ]),
             'content' => $this->renderTemplate($template, $params),

@@ -4,7 +4,8 @@ namespace app\controllers;
 
 use app\engine\Request;
 use app\engine\Session;
-use app\models\Users;
+use app\models\entities\Users;
+use app\models\repositories\UsersRepository;
 
 class AuthController extends Controller
 {
@@ -26,14 +27,14 @@ class AuthController extends Controller
             $pass = $request->getParams()['pass'];
             $save = isset($request->getParams()['save']);
 
-            $allow = Users::auth($login, $pass);
+            $allow = (new UsersRepository())->auth($login, $pass);
 
             if ($allow){
                 if($save) {
-                    $result = Users::getOne((new Session)->getSession()['id']);
+                    $result = (new UsersRepository())->getOne((new Session)->getSession()['id']);
                     $hash = uniqid(rand(), true);
                     $result->hash = $hash;
-                    $result->save();
+                    (new UsersRepository())->save($result);
                     setcookie("hash", $hash, time() + 3600, '/');
                 }
                 header("Location: /auth/login");
@@ -79,7 +80,7 @@ class AuthController extends Controller
                 $hash = uniqid(rand(), true);
 
                 $user = new Users($login, $pass, $hash);
-                $user->save();
+                (new UsersRepository())->save($user);
 
                 header("Location: /auth/registration/?messageAuth=successReg");
                 die();
