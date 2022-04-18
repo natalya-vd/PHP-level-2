@@ -15,13 +15,19 @@ class BasketController extends Controller
     public function actionBasket()
     {
         $session_id = App::call()->session->getSessionId();
-
         $basket = App::call()->basketRepository->getBasket($session_id);
+
+        $user_id = App::call()->session->getSession()['id'];
+
+        if(!is_null($user_id)) {
+            $oldBaskets = App::call()->basketRepository->getProductsOldBaskets();
+        }
 
         echo $this->render('basket', [
             'title' => 'Корзина',
             'basket' => $basket,
-            'sumBasket' => App::call()->basketRepository->getSum($session_id)
+            'sumBasket' => App::call()->basketRepository->getSum($session_id),
+            'oldBaskets' => $oldBaskets,
         ]);
     }
 

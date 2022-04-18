@@ -18,13 +18,15 @@ class Orders extends Entity
         'phone' => false,
         'name_user' => false,
         'users_id' => false,
+        'status' => false,
     ];
 
-    public function __construct($session_id = null, $phone = null, $name_user = null, $users_id = null)
+    public function __construct($session_id = null, $phone = null, $name_user = null, $users_id = null, $status = null)
     {
         $this->session_id = $session_id;
         $this->phone = $phone;
         $this->name_user = $name_user;
         $this->users_id = $users_id;
+        $this->status = $status;
     }
 }

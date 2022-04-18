@@ -37,7 +37,7 @@ class OrdersController extends Controller
         $session = App::call()->session->getSession();
         $users_id = empty($session) ? 0 : $session['id'];
 
-        $orders = new Orders($session_id, $phone, $user_name, $users_id);
+        $orders = new Orders($session_id, $phone, $user_name, $users_id, 'Ожидает оформления');
         App::call()->ordersRepository->save($orders);
         App::call()->session->sessionRegenerate();
         

@@ -18,29 +18,32 @@
           <p>Сумма заказа:</p>
           <p>Статус заказа:</p>
         </li>
-      <?php foreach($ordersList as $key => $order): ?>
-        <li class="admin-item <?php $key % 2 == 0 ? print 'admin-item-gray': print 'admin-item-green'?>">
+
+      {% for key, order in ordersList %}
+        <li class="admin-item {{key % 2 == 0 ? 'admin-item-gray': 'admin-item-green' }}">
         <div class="admin-info">
-          <p>Номер заказа: <?=$order['id']?></p>
-          <p>Имя: <?=$order['name_user']?></p>
-          <p>Телефон: <?=$order['phone']?></p>
+          <p>Номер заказа: {{order.id}}</p>
+          <p>Имя: {{order.name_user}}</p>
+          <p>Телефон: {{order.phone}}</p>
         </div>
+
         <ul class="admin-product">
-          <?php foreach($order['productsList'] as $productsList): ?>
+          {% for productsList in order.productsList %}
           <li class="admin-info-product">
-            <p><?=$productsList['name_product']?></p>
-            <p><?=$productsList['price']?></p>
-            <p><?=$productsList['quantity']?></p>
+            <p>{{productsList.name_product}}</p>
+            <p>{{productsList.price}}</p>
+            <p>{{productsList.quantity}}</p>
           </li>
-          <?php endforeach; ?>
+          {% endfor %}
         </ul>
-        <p><?=$order['sum']?></p>
+
+        <p>{{order.sum}}</p>
         <div>
-          <p data-status-id="<?=$order['id']?>"><?=$order['status']?></p>
-          <button data-id="<?=$order['id']?>" type="button" <?php if($order['status'] === 'Заказ оформлен') echo 'disabled' ?>>Оформить заказ</button>
+          <p data-status-id="{{order.id}}">{{order.status}}</p>
+          <button data-order="{{order.id}}" type="button" {{order.status == 'Заказ оформлен' ? 'disabled' : ''}}>Оформить заказ</button>
         </div>
       </li>
-      <?php endforeach; ?>    
+      {% endfor %}
     </ul>
   {% endif %}
 </main>

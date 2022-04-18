@@ -1,5 +1,6 @@
 const BASE_PATH_BASKET = '/basket';
 const BASE_PATH_ORDERS = '/orders';
+const BASE_PATH_ADMIN = '/admin';
 
 async function makePostRequest(url, data) {
   try {
@@ -86,6 +87,17 @@ window.addEventListener('load', async () => {
         getElement('#form-order').style.display = 'none';
         getElement('#count').innerText = dataResponse.count;
       }
+    })
+  }
+
+  if(getElement('[data-order]')) {
+    addClicks('[data-order]', async(e) => {
+      const id = e.currentTarget.dataset.order;
+
+      const data = await makePostRequest(`${BASE_PATH_ADMIN}/statusOrder`, {'id': id});
+
+      getElement(`[data-status-id='${id}']`).innerText = data.status;
+      getElement(`[data-order='${id}']`).disabled = true;
     })
   }
 })

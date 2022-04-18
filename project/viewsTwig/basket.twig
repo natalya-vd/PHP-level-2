@@ -42,4 +42,45 @@
       <a class="button" href="/orders/orders">Оформить покупку</a>
     </div>
   </div>
+
+  {% if oldBaskets is not empty %}
+  <h3>
+    Ранее оформленные заказы
+  </h3>
+  <ul>
+    <li class="admin-item admin-item-green">
+      <div></div>
+      <ul class="admin-product">
+          <li class="admin-info-product">
+            <p>Наименование товара:</p>
+            <p>Цена:</p>
+            <p>Количество:</p>
+          </li>
+        </ul>
+        <p>Сумма заказа:</p>
+        <p>Статус заказа:</p>
+      </li>
+    {% for key, order in oldBaskets %}
+      <li class="admin-item {{key % 2 == 0 ? 'admin-item-gray': 'admin-item-green' }}">
+      <div class="admin-info">
+        <p>Номер заказа: {{order.id}}</p>
+      </div>
+
+      <ul class="admin-product">
+        {% for productsList in order.productsList %}
+        <li class="admin-info-product">
+          <p>{{productsList.name_product}}</p>
+            <p>{{productsList.price}}</p>
+            <p>{{productsList.quantity}}</p>
+        </li>
+        {% endfor %}
+      </ul>
+      <p>{{order.sum}}</p>
+      <div>
+        <p data-status-id="{{order.id}}">{{order.status}}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 </main>
