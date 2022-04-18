@@ -2,10 +2,8 @@
 
 namespace app\controllers;
 
-use app\engine\Request;
-use app\engine\Session;
+use app\engine\App;
 use app\models\entities\Basket;
-use app\models\repositories\BasketRepository;
 
 class BasketController extends Controller
 {
@@ -16,32 +14,32 @@ class BasketController extends Controller
     
     public function actionBasket()
     {
-        $session_id = (new Session())->getSessionId();
+        $session_id = App::call()->session->getSessionId();
 
-        $basket = (new BasketRepository())->getBasket($session_id);
+        $basket = App::call()->basketRepository->getBasket($session_id);
 
         echo $this->render('basket', [
             'title' => 'Корзина',
             'basket' => $basket,
-            'sumBasket' => (new BasketRepository())->getSum($session_id)
+            'sumBasket' => App::call()->basketRepository->getSum($session_id)
         ]);
     }
 
     public function actionAdd()
     {
-        $id = (new Request())->getParams()['id'];
-        $price = (new Request())->getParams()['price'];
+        $id = App::call()->request->getParams()['id'];
+        $price = App::call()->request->getParams()['price'];
 
-        $session_id = (new Session())->getSessionId();
-        $session = (new Session())->getSession();
+        $session_id = App::call()->session->getSessionId();
+        $session = App::call()->session->getSession();
         $users_id = empty($session) ? 0 : $session['id'];
 
         $basket = new Basket($id, $price, $session_id, '1', $users_id);
-        (new BasketRepository())->save($basket);
+        App::call()->basketRepository->save($basket);
 
         $response = [
             'status' => 'ok',
-            'count' => (new BasketRepository())->getCountWhere('id', 'session_id', $session_id),
+            'count' => App::call()->basketRepository->getCountWhere('id', 'session_id', $session_id),
         ];
 
         echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
@@ -50,23 +48,23 @@ class BasketController extends Controller
 
     public function actionDelete()
     {
-        $id = (new Request())->getParams()['id'];
+        $id = App::call()->request->getParams()['id'];
 
-        $session_id = (new Session())->getSessionId();
+        $session_id = App::call()->session->getSessionId();
 
-        $basket = (new BasketRepository())->getOne($id);
+        $basket = App::call()->basketRepository->getOne($id);
 
         $error = 'ok';
         if($session_id == $basket->session_id) {
-            (new BasketRepository())->delete($basket);
+            App::call()->basketRepository->delete($basket);
         } else {
             $error = 'error';
         }
 
         $response = [
             'status' => $error,
-            'count' => (new BasketRepository())->getCountWhere('id', 'session_id', $session_id),
-            'sumBasket' => (new BasketRepository())->getSum($session_id)
+            'count' => App::call()->basketRepository->getCountWhere('id', 'session_id', $session_id),
+            'sumBasket' => App::call()->basketRepository->getSum($session_id)
         ];
 
         echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

@@ -1,7 +1,8 @@
 <?php
 
 namespace app\models;
-use app\engine\Db;
+
+use app\engine\App;
 
 abstract class Repository {
     abstract protected function getTableName();
@@ -11,7 +12,7 @@ abstract class Repository {
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        return Db::getInstance()->queryOneObject($sql, ['id' => $id], $this->getEntityClass());
+        return App::call()->db->queryOneObject($sql, ['id' => $id], $this->getEntityClass());
     }
 
     public function getAll()
@@ -19,7 +20,7 @@ abstract class Repository {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName}";
 
-        return Db::getInstance()->queryAll($sql);
+        return App::call()->db->queryAll($sql);
     }
 
     public function getLimit($limit)
@@ -27,28 +28,28 @@ abstract class Repository {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} LIMIT 0, ?";
 
-        return Db::getInstance()->queryLimit($sql, $limit);
+        return App::call()->db->queryLimit($sql, $limit);
     }
 
     public function getCountWhere($field, $name, $value) {
         $tableName = $this->getTableName();
         $sql = "SELECT count({$field}) as count FROM $tableName WHERE {$name} = :value";
 
-        return Db::getInstance()->queryOne($sql, ['value' => $value])['count'];
+        return App::call()->db->queryOne($sql, ['value' => $value])['count'];
     }
 
     public function getWhere($name, $value) {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM $tableName WHERE {$name} = :value";
 
-        return Db::getInstance()->queryOneObject($sql, ['value' => $value], $this->getEntityClass());
+        return App::call()->db->queryOneObject($sql, ['value' => $value], $this->getEntityClass());
     }
 
     public function getWhereAll($name, $value) {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM $tableName WHERE {$name} = :value";
 
-        return Db::getInstance()->queryAll($sql, ['value' => $value]);
+        return App::call()->db->queryAll($sql, ['value' => $value]);
     }
 
     //new Basket()
@@ -67,8 +68,8 @@ abstract class Repository {
 
         $sql = "INSERT INTO {$tableName} ({$strKeys}) VALUES ({$strValues})";
 
-        Db::getInstance()->execute($sql, $params);
-        $entity->id = DB::getInstance()->lastInsertId();
+        App::call()->db->execute($sql, $params);
+        $entity->id = App::call()->db->lastInsertId();
 
         return $this;
     }
@@ -90,7 +91,7 @@ abstract class Repository {
         $strKeys = implode(', ', $keys);
 
         $sql = "UPDATE {$tableName} SET {$strKeys} WHERE id = :id";
-        Db::getInstance()->execute($sql, $params);
+        App::call()->db->execute($sql, $params);
 
         return $this;
     }
@@ -99,7 +100,7 @@ abstract class Repository {
     {
         $tableName = $this->getTableName();
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
-        return Db::getInstance()->execute($sql, ['id' => $entity->id]);
+        return App::call()->db->execute($sql, ['id' => $entity->id]);
     }
 
     public function save(Entity $entity) 

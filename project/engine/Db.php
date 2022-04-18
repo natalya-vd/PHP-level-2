@@ -5,18 +5,19 @@ use app\traits\TSingletone;
 
 class Db
 {
-    private $config = [
-        'driver' => 'mysql',
-        'host' => 'localhost',
-        'login' => 'user',
-        'password' => '12345',
-        'database' => 'shop',
-        'charset' => 'utf8'
-    ];
-
-    use TSingletone;
+    private $config;
 
     private $connection = null;
+
+    public function __construct($driver = null, $host = null, $login = null, $password = null, $database = null, $charset = 'utf8')
+    {
+        $this->config['driver'] = $driver;
+        $this->config['host'] = $host;
+        $this->config['login'] = $login;
+        $this->config['password'] = $password;
+        $this->config['database'] = $database;
+        $this->config['charset'] = $charset;
+    }
 
     private function getConnection()
     {

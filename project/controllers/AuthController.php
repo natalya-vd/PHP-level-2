@@ -2,10 +2,8 @@
 
 namespace app\controllers;
 
-use app\engine\Request;
-use app\engine\Session;
+use app\engine\App;
 use app\models\entities\Users;
-use app\models\repositories\UsersRepository;
 
 class AuthController extends Controller
 {
@@ -20,21 +18,19 @@ class AuthController extends Controller
         $allow = false;
         $messageError = null;
 
-        $request = new Request();
+        if(isset(App::call()->request->getParams()['login'])) {
+            $login = App::call()->request->getParams()['login'];
+            $pass = App::call()->request->getParams()['pass'];
+            $save = isset(App::call()->request->getParams()['save']);
 
-        if(isset($request->getParams()['login'])) {
-            $login = $request->getParams()['login'];
-            $pass = $request->getParams()['pass'];
-            $save = isset($request->getParams()['save']);
-
-            $allow = (new UsersRepository())->auth($login, $pass);
+            $allow = App::call()->usersRepository->auth($login, $pass);
 
             if ($allow){
                 if($save) {
-                    $result = (new UsersRepository())->getOne((new Session)->getSession()['id']);
+                    $result = App::call()->usersRepository->getOne(App::call()->session->getSession()['id']);
                     $hash = uniqid(rand(), true);
                     $result->hash = $hash;
-                    (new UsersRepository())->save($result);
+                    App::call()->usersRepository->save($result);
                     setcookie("hash", $hash, time() + 3600, '/');
                 }
                 header("Location: /auth/login");
@@ -45,8 +41,8 @@ class AuthController extends Controller
             }
         }
 
-        if(!$allow && $request->getParams()['messageAuth']) {
-            $messageError = $this->messageList[$request->getParams()['messageAuth']];
+        if(!$allow && App::call()->request->getParams()['messageAuth']) {
+            $messageError = $this->messageList[App::call()->request->getParams()['messageAuth']];
         }
 
         echo $this->render('auth', [
@@ -58,8 +54,7 @@ class AuthController extends Controller
 
     public function actionLogout()
     {
-        $session = new Session();
-        $session->sessionDestroy();
+        App::call()->session->sessionDestroy();
         setcookie("hash", $_COOKIE["hash"], time() - 3600, '/');
         header("Location: " . $_SERVER['HTTP_REFERER']);
         die();
@@ -68,27 +63,26 @@ class AuthController extends Controller
     public function actionRegistration()
     {
         $messageReg = null;
-        $request = new Request();
 
-        if(isset($request->getParams()['login_reg'])) {         
-            if(empty($request->getParams()['login_reg']) || empty($request->getParams()['pass_reg'])) {
+        if(isset(App::call()->request->getParams()['login_reg'])) {         
+            if(empty(App::call()->request->getParams()['login_reg']) || empty(App::call()->request->getParams()['pass_reg'])) {
                 header("Location: /auth/registration/?messageAuth=errorReg");
                 die();
             } else {
-                $login = $request->getParams()['login_reg'];
-                $pass = password_hash($request->getParams()['pass_reg'], PASSWORD_DEFAULT);
+                $login = App::call()->request->getParams()['login_reg'];
+                $pass = password_hash(App::call()->request->getParams()['pass_reg'], PASSWORD_DEFAULT);
                 $hash = uniqid(rand(), true);
 
                 $user = new Users($login, $pass, $hash);
-                (new UsersRepository())->save($user);
+                App::call()->usersRepository->save($user);
 
                 header("Location: /auth/registration/?messageAuth=successReg");
                 die();
             }
         }
 
-        if($request->getParams()['messageAuth']) {
-            $messageReg = $this->messageList[$request->getParams()['messageAuth']];
+        if(App::call()->request->getParams()['messageAuth']) {
+            $messageReg = $this->messageList[App::call()->request->getParams()['messageAuth']];
         }
 
         echo $this->render('auth', [

@@ -270,6 +270,11 @@ textarea:focus {
     cursor: pointer;
 }
 
+/* Заказы */
+.order-success {
+    display: none;
+}
+
 /*Авторизация*/
 .login {
     display: flex;

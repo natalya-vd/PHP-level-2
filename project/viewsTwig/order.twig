@@ -1,0 +1,20 @@
+<main class="container">
+    <p class="order-success">
+      Заказ оформлен
+    </p>
+    {% if status == 'error' %}
+    <p>
+      Вы еще ничего не добавили в корзину.
+    </p>
+    <a class="one-product-back" href="/product/catalog">Перейти к покупке товаров</a>
+    {% else %}
+  <form action="#" id="form-order">
+    <p>
+      Для оформления заказа введите номер телефона и Ваше имя, по которому с Вами свяжется наш менеджер.
+    </p>
+    <input type="text" name="name_user" placeholder="Имя">
+    <input type="text" name="phone" placeholder="Телефон">
+    <button class="button" id="order" type="submit">Оформить заказ</button>
+  </form>
+  {% endif %}
+</main>

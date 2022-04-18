@@ -1,7 +1,8 @@
 <?php
 
 namespace app\controllers;
-use app\models\repositories\FeedbacksRepository;
+
+use app\engine\App;
 
 class FeedbacksController extends Controller
 {
@@ -14,7 +15,7 @@ class FeedbacksController extends Controller
     {
         echo $this->render('feedbacks', [
             'title' => 'Отзывы',
-            'feedbackList' => (new FeedbacksRepository())->getAll()
+            'feedbackList' => App::call()->feedbacksRepository->getAll()
         ]);
     }
 }
