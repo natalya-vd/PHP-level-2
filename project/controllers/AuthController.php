@@ -1,6 +1,9 @@
 <?php
 
 namespace app\controllers;
+
+use app\engine\Request;
+use app\engine\Session;
 use app\models\Users;
 
 class AuthController extends Controller
@@ -16,29 +19,33 @@ class AuthController extends Controller
         $allow = false;
         $messageError = null;
 
-        if(isset($_POST['login'])) {
-            $login = $_POST['login'];
-            $pass = $_POST['pass'];
-            $save = isset($_POST['save']);
+        $request = new Request();
+
+        if(isset($request->getParams()['login'])) {
+            $login = $request->getParams()['login'];
+            $pass = $request->getParams()['pass'];
+            $save = isset($request->getParams()['save']);
 
             $allow = Users::auth($login, $pass);
+
             if ($allow){
                 if($save) {
-                    $result = Users::getOne($_SESSION['id']);
+                    $result = Users::getOne((new Session)->getSession()['id']);
                     $hash = uniqid(rand(), true);
                     $result->hash = $hash;
                     $result->save();
                     setcookie("hash", $hash, time() + 3600, '/');
                 }
-                header("Location: /?c=auth&a=login");
+                header("Location: /auth/login");
                 die();
             } else {
-                header("Location: /?c=auth&a=login&messageAuth=error");
+                header("Location: /auth/login/?messageAuth=error");
                 die();
             }
         }
-        if(!$allow && $_GET['messageAuth']) {
-            $messageError = $this->messageList[$_GET['messageAuth']];
+
+        if(!$allow && $request->getParams()['messageAuth']) {
+            $messageError = $this->messageList[$request->getParams()['messageAuth']];
         }
 
         echo $this->render('auth', [
@@ -50,7 +57,8 @@ class AuthController extends Controller
 
     public function actionLogout()
     {
-        session_destroy();
+        $session = new Session();
+        $session->sessionDestroy();
         setcookie("hash", $_COOKIE["hash"], time() - 3600, '/');
         header("Location: " . $_SERVER['HTTP_REFERER']);
         die();
@@ -59,26 +67,27 @@ class AuthController extends Controller
     public function actionRegistration()
     {
         $messageReg = null;
+        $request = new Request();
 
-        if(isset($_POST['login_reg'])) {         
-            if(empty($_POST['login_reg']) || empty($_POST['pass_reg'])) {
-                header("Location: /?c=auth&a=registration&messageAuth=errorReg");
+        if(isset($request->getParams()['login_reg'])) {         
+            if(empty($request->getParams()['login_reg']) || empty($request->getParams()['pass_reg'])) {
+                header("Location: /auth/registration/?messageAuth=errorReg");
                 die();
             } else {
-                $login = $_POST['login_reg'];
-                $pass = password_hash($_POST['pass_reg'], PASSWORD_DEFAULT);
+                $login = $request->getParams()['login_reg'];
+                $pass = password_hash($request->getParams()['pass_reg'], PASSWORD_DEFAULT);
                 $hash = uniqid(rand(), true);
 
                 $user = new Users($login, $pass, $hash);
                 $user->save();
 
-                header("Location: /?c=auth&a=registration&messageAuth=successReg");
+                header("Location: /auth/registration/?messageAuth=successReg");
                 die();
             }
         }
 
-        if($_GET['messageAuth']) {
-            $messageReg = $this->messageList[$_GET['messageAuth']];
+        if($request->getParams()['messageAuth']) {
+            $messageReg = $this->messageList[$request->getParams()['messageAuth']];
         }
 
         echo $this->render('auth', [

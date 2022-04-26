@@ -87,6 +87,27 @@ textarea:focus {
     color: lightslategrey;
 }
 
+.nav__basket {
+    position: relative;
+}
+
+.nav__count {
+    position: absolute;
+    top: -16px;
+    right: -18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    padding: 3px;
+    background-color: #9db7d1;
+    color: white;
+    border-radius: 50%;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
 /*Галлерея*/
 .form {
     margin: 0 0 30px;
@@ -183,7 +204,7 @@ textarea:focus {
     gap: 10px;
     width: 65%;
     margin: 0;
-    padding: 11px 0 0;
+    padding: 11px 0;
     border-top: 0.3px solid rgba(70, 163, 88, 0.5);
     list-style: none;
 }

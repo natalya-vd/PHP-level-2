@@ -4,14 +4,14 @@
     <div>
       Добро пожаловать {{ login }}
     </div>
-    <a href="/?c=auth&a=logout">Выйти</a>
+    <a href="/auth/logout">Выйти</a>
     {% else %}
     <div>
       <p>
         Для регистрации придумайте логин и пароль
       </p>
       <p class="error-message">{{ messageReg }}</p>
-      <form action="/?c=auth&a=registration" name="registration" method="post">
+      <form action="/auth/registration" name="registration" method="post">
         <div class="login-inner">
           <input type="text" placeholder="Введите имя" name="login_reg">
           <input type="password" placeholder="Введите пароль" name="pass_reg">
@@ -24,7 +24,7 @@
         Если Вы уже зарегистрированы, введите логин и пароль
       </p>
       <p class="error-message">{{ messageError }}</p>
-      <form action="/?c=auth&a=login" name="authentication" method="post">
+      <form action="/auth/login" name="authentication" method="post">
         <div class="login-inner">
           <input type="text" placeholder="Введите имя" name="login">
           <input type="password" placeholder="Введите пароль" name="pass">

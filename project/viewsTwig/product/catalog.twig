@@ -3,7 +3,7 @@
     <ul class="catalog-list">
         {% for item in catalog %}
             <li class="catalog-item">
-                <a class="catalog-link" href="/?c=product&a=card&id={{item.id}}">
+                <a class="catalog-link" href="/product/card/?id={{item.id}}">
                     <img src="/img/catalog/{{item.path}}" alt="{{item.name_product}}" width="300" height="200">
                     <div class="catalog-inner">
                         <h3>{{item.name_product}}</h3>
@@ -14,5 +14,7 @@
             </li>
         {% endfor %}
     </ul>
-    <a class="button-link button" href="/?c=product&a=catalog&page={{page}}">Показать еще</a>
+    <a class="button-link button" href="/product/catalog/?page={{page}}">Показать еще</a>
+    <h2>Последние отзывы</h2>
+    {% include "modules/feedback.twig" %}
 </main>

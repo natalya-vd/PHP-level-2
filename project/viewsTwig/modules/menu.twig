@@ -6,23 +6,18 @@
             </a>
         </li>
         <li>
-            <a href="/?c=product&a=catalog">
+            <a href="/product/catalog">
                 Каталог
             </a>
         </li>
-        <li>
-            <a href="/?c=basket&a=basket">
-                Корзина
+        <li class="nav__basket">
+            <a href="/basket/basket">
+                Корзина <span class="nav__count" id="count">{{count is null ? 0 : count}}</span>
             </a>
         </li>
         <li>
-            <a href="/?c=auth&a=login">
+            <a href="/auth/login">
                 Авторизация
-            </a>
-        </li>
-        <li>
-            <a href="/?c=feedbacks&a=feedbacks">
-                Отзывы
             </a>
         </li>
     </ul>

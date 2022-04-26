@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\engine\Request;
 use app\models\Products;
+use app\models\Feedbacks;
 
 class ProductController extends Controller
 {
@@ -13,7 +15,7 @@ class ProductController extends Controller
     
     public function actionCatalog()
     {
-        $page = $_GET['page'] ?? 0;
+        $page = (new Request())->getParams()['page'] ?? 0;
 
         $catalog = Products::getLimit(($page + 1) * 4);
 
@@ -21,17 +23,19 @@ class ProductController extends Controller
             'title' => 'Каталог',
             'catalog' => $catalog,
             'page' => ++$page,
+            'feedbackList' => Feedbacks::getAll(),
         ]);
     }
 
     public function actionCard()
     {
-        $id = $_GET['id'];
+        $id = (new Request())->getParams()['id'];
         $product = Products::getOne($id);
 
         echo $this->render('product/card', [
             'title' => 'Страница товара',
-            'product' => $product
+            'product' => $product,
+            'feedbackList' => Feedbacks::getWhereAll('product_id', $id)
         ]);
     }
 }

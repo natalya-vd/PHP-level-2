@@ -5,8 +5,8 @@ use app\interfaces\IRenderer;
 
 class TwigRender implements IRenderer
 {
-    public $loader;
-    public $twig;
+    protected $loader;
+    protected $twig;
 
     public function __construct($views)
     {
