@@ -1,9 +1,9 @@
 <?php
 
 namespace app\models;
-use app\interfaces\IModel;
+use app\exceptions\EntityException;
 
-abstract class Model implements IModel 
+abstract class Entity
 {
     protected $props = [];
 
@@ -17,18 +17,18 @@ abstract class Model implements IModel
 
     public function __get($name)
     {
-        if(!is_null($this->$name)) {
+        if(property_exists($this, $name)) {
             return $this->$name;
         } else {
-            die('Нет такого поля');
+            throw new EntityException('get');
         }
     }
 
     public function __isset($name) {
-        if(!is_null($this->$name)) {
+        if(property_exists($this, $name)) {
             return $this->$name;
         } else {
-            die('Нет такого поля');
+            throw new EntityException('isset');
         }
     }
 }

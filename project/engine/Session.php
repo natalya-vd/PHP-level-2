@@ -36,4 +36,9 @@ class Session
     {
         return $this->session;
     }
+
+    public function getSessionId()
+    {
+        return session_id();
+    }
 }

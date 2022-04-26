@@ -1,0 +1,49 @@
+<main class="container">
+  {% if isAdmin is empty %}
+    <p>
+      Недостаточно прав для просмотра страницы <a class="admin-back" href="/auth/login">авторизуйтесь</a>
+    </p>
+  {% else %}
+    <h2>Список заказов</h2>
+    <ul>
+      <li class="admin-item admin-item-green">
+        <div></div>
+        <ul class="admin-product">
+            <li class="admin-info-product">
+              <p>Наименование товара:</p>
+              <p>Цена:</p>
+              <p>Количество:</p>
+            </li>
+          </ul>
+          <p>Сумма заказа:</p>
+          <p>Статус заказа:</p>
+        </li>
+
+      {% for key, order in ordersList %}
+        <li class="admin-item {{key % 2 == 0 ? 'admin-item-gray': 'admin-item-green' }}">
+        <div class="admin-info">
+          <p>Номер заказа: {{order.id}}</p>
+          <p>Имя: {{order.name_user}}</p>
+          <p>Телефон: {{order.phone}}</p>
+        </div>
+
+        <ul class="admin-product">
+          {% for productsList in order.productsList %}
+          <li class="admin-info-product">
+            <p>{{productsList.name_product}}</p>
+            <p>{{productsList.price}}</p>
+            <p>{{productsList.quantity}}</p>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <p>{{order.sum}}</p>
+        <div>
+          <p data-status-id="{{order.id}}">{{order.status}}</p>
+          <button data-order="{{order.id}}" type="button" {{order.status == 'Заказ оформлен' ? 'disabled' : ''}}>Оформить заказ</button>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</main>

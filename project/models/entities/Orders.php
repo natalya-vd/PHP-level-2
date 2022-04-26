@@ -1,8 +1,10 @@
 <?php
 
-namespace app\models;
+namespace app\models\entities;
 
-class Orders extends DBModel
+use app\models\Entity;
+
+class Orders extends Entity
 {
     protected $id;
     protected $session_id;
@@ -26,10 +28,5 @@ class Orders extends DBModel
         $this->name_user = $name_user;
         $this->users_id = $users_id;
         $this->status = $status;
-    }
-
-    public static function getTableName()
-    {
-        return 'orders';
     }
 }
