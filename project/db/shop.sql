@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 14 2022 г., 00:38
+-- Время создания: Апр 19 2022 г., 02:17
 -- Версия сервера: 8.0.24
 -- Версия PHP: 7.4.27
 
@@ -80,12 +80,25 @@ INSERT INTO `basket` (`id`, `product_id`, `price`, `quantity`, `session_id`, `us
 (142, 2, 150, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 2),
 (143, 3, 180, 1, 'ejtj2vp4tbb8g94b0bm3204n5533mdb4', 2),
 (144, 3, 180, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
-(146, 3, 180, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 2),
 (152, 2, 150, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
-(158, 3, 180, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
-(160, 1, 200, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
-(161, 2, 150, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
-(162, 7, 125, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0);
+(162, 7, 125, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
+(163, 2, 150, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
+(164, 2, 150, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
+(165, 6, 125, 1, '5rdu370vbsf82spqvfqj5k5u0uovel1k', 0),
+(166, 1, 200, 1, 'f6vs9299d2cjvtqjhbljls0j105agdnl', 2),
+(167, 2, 150, 1, 'f6vs9299d2cjvtqjhbljls0j105agdnl', 2),
+(168, 3, 180, 1, 'ok4sfok6hlrt8g38rcmdencgdbma3ted', 2),
+(169, 2, 150, 1, 'ok4sfok6hlrt8g38rcmdencgdbma3ted', 2),
+(170, 2, 150, 1, 'oue2drf890mnd6mldf21ocggeiltmfh2', 1),
+(171, 3, 180, 1, 'oue2drf890mnd6mldf21ocggeiltmfh2', 1),
+(172, 1, 200, 1, 'oue2drf890mnd6mldf21ocggeiltmfh2', 1),
+(173, 2, 150, 1, '3avovl86ueph8f7kk511s4hl1r43sohs', 1),
+(174, 3, 180, 1, '3avovl86ueph8f7kk511s4hl1r43sohs', 1),
+(175, 1, 200, 1, '3avovl86ueph8f7kk511s4hl1r43sohs', 1),
+(176, 2, 150, 1, 'c4ookqs8na6hmjtrunsh67fe80t4b9mg', 1),
+(177, 1, 200, 1, 'c4ookqs8na6hmjtrunsh67fe80t4b9mg', 1),
+(178, 3, 180, 1, 'c4ookqs8na6hmjtrunsh67fe80t4b9mg', 1),
+(179, 4, 160, 1, 'c4ookqs8na6hmjtrunsh67fe80t4b9mg', 1);
 
 -- --------------------------------------------------------
 
@@ -171,7 +184,12 @@ INSERT INTO `orders` (`id`, `session_id`, `phone`, `name_user`, `users_id`, `sta
 (15, '0l0r7cvfaekdqqfeesaq4uqqidav2fif', '+7 (541) 236-52-63', 'user', 2, 'Ожидает оформления'),
 (16, '5lc1suqhhmq55peg8jjavsoal0mtcmgu', '+7 (541) 236-52-63', 'Тест', 0, 'Заказ оформлен'),
 (17, 'ec3f5afj7iegiapl4kk4v84cnn0o8b6a', '+7 (541) 236-52-63', 'Тест', 0, 'Заказ оформлен'),
-(18, 'pe2ieb6tbee0vj2sd9t1g01ni96srval', '+7 (541) 236-52-63', 'user', 0, 'Заказ оформлен');
+(18, 'pe2ieb6tbee0vj2sd9t1g01ni96srval', '+7 (541) 236-52-63', 'user', 0, 'Заказ оформлен'),
+(19, '5rdu370vbsf82spqvfqj5k5u0uovel1k', '+7 (541) 236-52-63', 'Тест', 2, 'Ожидает оформления'),
+(20, 'f6vs9299d2cjvtqjhbljls0j105agdnl', '+7 (541) 236-52-63', 'Тест', 2, 'Заказ оформлен'),
+(21, 'ok4sfok6hlrt8g38rcmdencgdbma3ted', '+7 (541) 236-52-63', 'Тест', 2, 'Заказ оформлен'),
+(22, '3avovl86ueph8f7kk511s4hl1r43sohs', '+7 (541) 236-52-63', 'gfd', 1, 'Заказ оформлен'),
+(23, 'c4ookqs8na6hmjtrunsh67fe80t4b9mg', '+7 (541) 236-52-63', 'df', 1, 'Заказ оформлен');
 
 -- --------------------------------------------------------
 
@@ -225,7 +243,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `pass`, `hash`, `role`) VALUES
-(1, 'admin', '$2y$10$m1Exrzvp.vZ6xGWr/xktNOqVfKdacvK2pzd6UlADlPqe925MenHmO', '1215441284625741c06e1581.21577137', 'admin'),
+(1, 'admin', '$2y$10$m1Exrzvp.vZ6xGWr/xktNOqVfKdacvK2pzd6UlADlPqe925MenHmO', '1409339047625cdb00d32ee5.54340237', 'admin'),
 (2, 'user', '$2y$10$jsqGiEoGnb.yBHcxJjmjMuvnf8XLmZwd9Xfyx8oDqsjyB.HH23Yvm', '1793416483623391c24f1820.40774930', 'guest'),
 (3, 'dad', '$2y$10$Mls11Sc2fT9gE5pDC3CMaelb6xvKuYECcdBLkSYlg2Z4UirP3EB0e', '78135313462336bf6052bf6.49747550', 'guest'),
 (4, 'lily', '$2y$10$dpMjXcyBzxeqY/95iF6NruP6UqFtX6tOW5EVG0AXc.u0LGjX5g/xy', '101522995262336c53831246.19897498', 'guest'),
@@ -283,7 +301,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
 
 --
 -- AUTO_INCREMENT для таблицы `feedbacks`
@@ -301,7 +319,7 @@ ALTER TABLE `gallery`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `products`

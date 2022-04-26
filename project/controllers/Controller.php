@@ -1,9 +1,9 @@
 <?php
 
 namespace app\controllers;
+
 use app\interfaces\IRenderer;
-use app\models\repositories\UsersRepository;
-use app\models\repositories\BasketRepository;
+use app\engine\App;
 
 abstract class Controller
 {
@@ -30,20 +30,19 @@ abstract class Controller
 
     public function render($template, $params = [])
     {
-        if((new UsersRepository())->isAuth()) {
+        if(App::call()->usersRepository->isAuth()) {
             $params['allow'] = true;
-            $params['login'] = (new UsersRepository())->getName();
+            $params['login'] = App::call()->usersRepository->getName();
         }
         
-        // Потом добавлю сюда логику для определения админа
-        // if(checkRole($_SESSION['login'])) {    
-        // $params['isAdmin'] = true;
-        // }
+        if(App::call()->usersRepository->checkRole()) {    
+            $params['isAdmin'] = true;
+        }
 
         return $this->renderTemplate('layouts/layout', [
             'header' => $this->renderTemplate('modules/header', [
                 'menu' => $this->renderTemplate('modules/menu', [
-                    'count' => (new BasketRepository())->getCountWhere('id', 'session_id', session_id())
+                    'count' => App::call()->basketRepository->getCountWhere('id', 'session_id', session_id())
                 ])
             ]),
             'content' => $this->renderTemplate($template, $params),
